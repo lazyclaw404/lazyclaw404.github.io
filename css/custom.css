@@ -1,0 +1,17 @@
+/* 强制所有文章正文两端对齐 */
+.markdown-body {
+  text-align: justify;
+  text-justify: inter-word;  /* 优化单词间距 */
+}
+
+/* 禁用字母的自动符号转换 */
+.post-content {
+  font-variant: normal !important;
+  text-transform: none !important;
+}
+
+/* 可选：针对编号中的括号特别保护 */
+.post-content figcaption,
+.post-content .caption {
+  font-variant: normal;
+}

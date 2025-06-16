@@ -30,14 +30,12 @@
 <meta property="og:image" content="https://lazyclaw404.github.io/2025/06/10/%E4%BB%8E%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA%E5%88%B0%E6%B1%82%E8%A7%A3%E5%88%86%E6%9E%90%EF%BC%9AMathematica%E5%9C%A8OM%E7%A0%94%E7%A9%B6%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/RS%20proof.png">
 <meta property="og:image" content="https://lazyclaw404.github.io/2025/06/10/%E4%BB%8E%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA%E5%88%B0%E6%B1%82%E8%A7%A3%E5%88%86%E6%9E%90%EF%BC%9AMathematica%E5%9C%A8OM%E7%A0%94%E7%A9%B6%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/propsition1%20proof.png">
 <meta property="article:published_time" content="2025-06-10T08:47:55.000Z">
-<meta property="article:modified_time" content="2025-06-16T09:57:28.123Z">
+<meta property="article:modified_time" content="2025-06-16T12:43:58.001Z">
 <meta property="article:author" content="Lazyclaw">
 <meta property="article:tag" content="符号计算，Mathematica教学，文献复现">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://lazyclaw404.github.io/2025/06/10/%E4%BB%8E%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA%E5%88%B0%E6%B1%82%E8%A7%A3%E5%88%86%E6%9E%90%EF%BC%9AMathematica%E5%9C%A8OM%E7%A0%94%E7%A9%B6%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/%E7%89%A9%E6%B5%81%E6%88%90%E6%9C%AC.png">
   
-  
-    <meta name="referrer" content="no-referrer-when-downgrade">
   
   
   <title>从模型构建到求解分析：Mathematica在OM研究中的应用 - Lazyclaw Blog</title>
@@ -303,16 +301,16 @@
 <p>鉴于网络上已有大量的Mathematica基础使用教程，本文将侧重于Mathematica在OM研究的具体应用，相关函数的详细使用方法与其他基础操作疑问请读者自行查阅网络资料。下面，我将基于一篇学术论文演示如何使用Mathematica构建和求解分析OM模型。论文选取自OM领域国际权威期刊<em>European Journal of Operational Research</em>，作者为该论文提供了详细的数学证明，有任何数学上的疑问可直接参阅在线附录，本文只演示如何在Mathematica上实现这些数学分析步骤。</p>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://www.sciencedirect.com/science/article/pii/S0377221720306408">Qin X, Liu Z, Tian L (2021) The Optimal Combination between Selling Mode and Logistics Service Strategy in an E-commerce Market. <em>European Journal of Operational Research</em> 289(2): 639–651.</a></p>
-<p><a target="_blank" rel="noopener" href="https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fars.els-cdn.com%2Fcontent%2Fimage%2F1-s2.0-S0377221720306408-mmc1.docx&amp;wdOrigin=BROWSELINK">Online Appendix-The Optimal Combination between Selling Mode and Logistics Service Strategy in an E-commerce Market</a></p>
+<p><a target="_blank" rel="noopener" href="https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fars.els-cdn.com%2Fcontent%2Fimage%2F1-s2.0-S0377221720306408-mmc1.docx&amp;wdOrigin=BROWSELINK">Online Appendix-The Optimal Combination between Selling Mode and Logistics Service Strategy in an E-commerce Market.</a></p>
 </blockquote>
 <h3 id="2-1-论文概述">2.1 论文概述</h3>
-<p>本次选取的论文主要探讨了电子商务市场中平台销售模式 (转售 vs 市场) 与物流服务策略 (供应商提供物流 vs 平台提供物流) 的最优组合问题。我选择这篇论文作为示例的原因在于其模型结构简单、清晰但又不失代表性，非常适合作为教学案例。可能有一些刚接触OM领域的读者会认为模型越复杂、数学越艰深，论文就越“高级”，进而质疑本文所选取的论文。但事实上，复杂≠深刻，难解≠合理，这里我想强调以下个人观点：</p>
+<p>本次选取的论文主要探讨了电子商务市场中平台销售模式 (转售 vs. 市场) 与物流服务策略 (供应商提供物流 vs. 平台提供物流) 的最优组合问题。我选择这篇论文作为示例的原因在于其模型结构简单、清晰但又不失代表性，非常适合作为教学案例。可能有一些刚接触OM领域的读者会认为模型越复杂、数学越艰深，论文就越“高级”，进而质疑本文所选取的论文。但事实上，复杂≠深刻，难解≠合理，这两点所有研究人员都应该谨记于心。</p>
 <blockquote>
 <p>“All models are wrong, but some are useful.” — George E. P. Box</p>
 <p>评估运营管理研究的价值，关键不在于模型的复杂度或求解难度，而在于它是否科学、合理地用数学语言刻画了一个有意义的现实问题。优秀的OM研究者往往会在充分反映实际情境的前提下，尽可能简化模型，直击问题本质。<strong>真正的大师之作，常常是用一个简洁而清晰的数学模型，揭示实践中长期存在的商业难题，为从业人员提供有益的启示。</strong></p>
 </blockquote>
 <p><strong>模型结构</strong></p>
-<p>该论文考虑了一条由一个上游产品供应商和一个下游在线电商平台组成的分销渠道。其中，电商平台可选择转售模式作为经销商，或选择市场模式作为在线市场。在转售模式下（例如京东自营店），电商平台先以批发价格<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span></span></span></span>从供应商处采购产品，然后以零售价格<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span>把产品卖给消费者。在市场模式下（例如淘宝、拼多多），电商平台允许供应商入驻平台开设品牌旗舰店，供应商得以按零售价格<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span>向消费者直接出售其产品，但平台会按佣金比例<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span></span></span></span>对每笔订单进行抽成。不失一般性，该文把产品的边际生产成本和销售成本标化为0 (注意该假设并不影响模型分析的定性结果，是OM研究广泛采用的一种假设) 。在确定销售模式后，该文关注到产品零售商还应决定由谁来负责产品的物流配送服务。具体来说，在转售模式下电商平台应决定是自己配送还是由供应商配送，在市场模式下供应商应决定是自己配送还是由平台配送，形成以下四种组合：</p>
+<p>该论文考虑了一条由一个上游产品供应商和一个下游在线电商平台组成的分销渠道。其中，电商平台可选择转售模式作为经销商，或选择市场模式作为在线市场。在转售模式下（例如京东自营店），电商平台先以批发价格<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span></span></span></span>从供应商处采购产品，然后以零售价格<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span>把产品卖给消费者。在市场模式下（例如淘宝、拼多多），电商平台允许供应商入驻平台开设品牌旗舰店，供应商得以按零售价格<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span>向消费者直接出售其产品，但平台会按佣金比例<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span></span></span></span>对每笔订单进行抽成。不失一般性，该文把产品的边际生产成本和销售成本标化为0 (注意该假设并不影响模型分析的定性结果，是OM研究广泛采用的一种假设）。在确定销售模式后，该文关注到产品零售商还应决定由谁来负责产品的物流配送服务。具体来说，在转售模式下电商平台应决定是自己配送还是由供应商配送，在市场模式下供应商应决定是自己配送还是由平台配送，形成以下四种组合：</p>
 <ul>
 <li>转售模式+供应商物流</li>
 <li>转售模式+平台物流</li>
@@ -420,7 +418,7 @@
 <li><strong>动态可视化扩展</strong>：Mathematica的Manipulate等交互功能可以进一步用于构建教学演示模型，帮助非技术背景的决策者理解复杂模型的管理启示。研究者可尝试开发动态参数看板，直观展示关键参数如何影响均衡结果。</li>
 </ul>
 <h3 id="3-3-结语">3.3 结语</h3>
-<p>运营管理研究正处在一个快速进步的时代。一方面，现实商业问题的复杂性要求更精确、更复杂的数学模型；另一方面，研究工具的发展使得复杂模型的求解变得可行。因此，近些年<em>Management Science</em>、<em>Manufacturing &amp; Service Operations Management</em>、<em>Production and Operations Management</em>、<em>European Journal of Operational Research</em>、<em>Naval Research Logistics</em>等OM/OR领域国际顶尖期刊发表的文章提出的模型日益复杂。然而，正如我在前文中所陈述的个人观点：优秀的研究工作不在于使用最复杂的模型，而在于选择适当的工具，清晰地回答重要的管理问题。</p>
+<p>运营管理研究正处在一个快速进步的时代。一方面，现实商业问题的复杂性要求更精确、更复杂的数学模型；另一方面，研究工具的发展使得复杂模型的求解变得可行。因此，近些年<em>Management Science</em>、<em>Manufacturing &amp; Service Operations Management</em>、<em>Production and Operations Management</em>、<em>European Journal of Operational Research</em>、<em>Naval Research Logistics</em>等OM/OR领域国际顶尖期刊发表的文章提出的模型日益复杂。但是，我仍然坚信：优秀的研究工作不在于使用最复杂的模型，而在于通过一个简洁、合理的模型清晰地回答重要的管理问题。</p>
 <blockquote>
 <p>“All models are wrong, but some are useful.” — George E. P. Box<br>
 模型的价值不在于完美复制现实，而在于揭示那些真正重要的关系，Mathematica正是帮助我们构建这些&quot;有用模型&quot;的利器。</p>
@@ -619,32 +617,6 @@
     </div>
   
   
-    <div class="statistics">
-  
-  
-
-  
-    
-      <span id="busuanzi_container_site_pv" style="display: none">
-        总访问量 
-        <span id="busuanzi_value_site_pv"></span>
-         次
-      </span>
-    
-    
-      <span id="busuanzi_container_site_uv" style="display: none">
-        总访客数 
-        <span id="busuanzi_value_site_uv"></span>
-         人
-      </span>
-    
-    
-
-  
-
-</div>
-
-  
   
 </div>
 
@@ -789,8 +761,6 @@
   <script>Fluid.plugins.imageCaption();</script>
 
   <script  src="/js/local-search.js" ></script>
-
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 

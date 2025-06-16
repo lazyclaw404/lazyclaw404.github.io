@@ -1,0 +1,810 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=light>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/catclaw_logo.png">
+  <link rel="icon" href="/img/catclaw_logo.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Lazyclaw">
+  <meta name="keywords" content="a; b; c">
+  
+    <meta name="description" content="1. 为什么选择Mathematica？ 运营管理 (Operations Management, OM) 研究通常基于博弈论、数学规划、排队论、效用理论及双边市场理论等运筹学方法和经济学理论，将供应链设计、资源调度、产品定价等实践问题转化为数学问题进行探讨。这类研究往往涉及到复杂的数学模型构建与求解分析工作，传统的纸笔数学推导不仅耗时耗力，而且容易出错。Mathematica作为一款强大的符号计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从模型构建到求解分析：Mathematica在OM研究中的应用">
+<meta property="og:url" content="https://lazyclaw404.github.io/2025/06/10/%E4%BB%8E%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA%E5%88%B0%E6%B1%82%E8%A7%A3%E5%88%86%E6%9E%90%EF%BC%9AMathematica%E5%9C%A8OM%E7%A0%94%E7%A9%B6%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/index.html">
+<meta property="og:site_name" content="Lazyclaw Blog">
+<meta property="og:description" content="1. 为什么选择Mathematica？ 运营管理 (Operations Management, OM) 研究通常基于博弈论、数学规划、排队论、效用理论及双边市场理论等运筹学方法和经济学理论，将供应链设计、资源调度、产品定价等实践问题转化为数学问题进行探讨。这类研究往往涉及到复杂的数学模型构建与求解分析工作，传统的纸笔数学推导不仅耗时耗力，而且容易出错。Mathematica作为一款强大的符号计">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lazyclaw404.github.io/2025/06/10/%E4%BB%8E%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA%E5%88%B0%E6%B1%82%E8%A7%A3%E5%88%86%E6%9E%90%EF%BC%9AMathematica%E5%9C%A8OM%E7%A0%94%E7%A9%B6%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/%E7%89%A9%E6%B5%81%E6%88%90%E6%9C%AC.png">
+<meta property="og:image" content="https://lazyclaw404.github.io/2025/06/10/%E4%BB%8E%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA%E5%88%B0%E6%B1%82%E8%A7%A3%E5%88%86%E6%9E%90%EF%BC%9AMathematica%E5%9C%A8OM%E7%A0%94%E7%A9%B6%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/RS%20proof.png">
+<meta property="og:image" content="https://lazyclaw404.github.io/2025/06/10/%E4%BB%8E%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA%E5%88%B0%E6%B1%82%E8%A7%A3%E5%88%86%E6%9E%90%EF%BC%9AMathematica%E5%9C%A8OM%E7%A0%94%E7%A9%B6%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/propsition1%20proof.png">
+<meta property="article:published_time" content="2025-06-10T08:47:55.000Z">
+<meta property="article:modified_time" content="2025-06-16T09:56:27.951Z">
+<meta property="article:author" content="Lazyclaw">
+<meta property="article:tag" content="符号计算，Mathematica教学，文献复现">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://lazyclaw404.github.io/2025/06/10/%E4%BB%8E%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA%E5%88%B0%E6%B1%82%E8%A7%A3%E5%88%86%E6%9E%90%EF%BC%9AMathematica%E5%9C%A8OM%E7%A0%94%E7%A9%B6%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/%E7%89%A9%E6%B5%81%E6%88%90%E6%9C%AC.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>从模型构建到求解分析：Mathematica在OM研究中的应用 - Lazyclaw Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"lazyclaw404.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":65,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":false,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Lazyclaw Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/background_cat1.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="从模型构建到求解分析：Mathematica在OM研究中的应用"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-06-10 16:47" pubdate>
+          2025年6月10日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          30 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">从模型构建到求解分析：Mathematica在OM研究中的应用</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="1-为什么选择Mathematica？">1. 为什么选择Mathematica？</h2>
+<p>运营管理 (Operations Management, OM) 研究通常基于博弈论、数学规划、排队论、效用理论及双边市场理论等运筹学方法和经济学理论，将供应链设计、资源调度、产品定价等实践问题转化为数学问题进行探讨。这类研究往往涉及到复杂的数学模型构建与求解分析工作，传统的纸笔数学推导不仅耗时耗力，而且容易出错。Mathematica作为一款强大的符号计算软件，以其卓越的数学处理能力和直观的可视化功能成为OM研究者的理想工具。相比Matlab、Python等其他工具，Mathematica具有以下独特优势：</p>
+<ul>
+<li><strong>符号计算优势</strong>：直接处理代数表达式，可得到精确解析式并自动进行公式推导和化简，尤其适用于理论建模和符号推导。</li>
+<li><strong>内置专业算法</strong>：包含数千种优化算法，支持从线性规划到非凸优化的各类问题，自动选择最合适的求解方法，让研究者专注于问题结果而不是如何求解。</li>
+<li><strong>函数式编程范式</strong>：代码指令可读性高、接近数学表达式，即使是没有编程基础的研究者也能快速上手。</li>
+<li><strong>交互式探索体验</strong>：提供类似Jupyter Notebook的笔记本界面和交互环境，支持代码分块执行和交互式动态图形，拥有完整排版系统，工程文件即可作为混合代码、文本、公式和图表的总结文档。</li>
+<li><strong>即时帮助系统</strong>：函数名自动补全，示例代码一键调用，官方文档完善，学习曲线平缓。</li>
+</ul>
+<h2 id="2-如何使用Mathematica？">2. 如何使用Mathematica？</h2>
+<p>鉴于网络上已有大量的Mathematica基础使用教程，本文将侧重于Mathematica在OM研究的具体应用，相关函数的详细使用方法与其他基础操作疑问请读者自行查阅网络资料。下面，我将基于一篇学术论文演示如何使用Mathematica构建和求解分析OM模型。论文选取自OM领域国际权威期刊<em>European Journal of Operational Research</em>，作者为该论文提供了详细的数学证明，有任何数学上的疑问可直接参阅在线附录，本文只演示如何在Mathematica上实现这些数学分析步骤。</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.sciencedirect.com/science/article/pii/S0377221720306408">Qin X, Liu Z, Tian L (2021) The Optimal Combination between Selling Mode and Logistics Service Strategy in an E-commerce Market. <em>European Journal of Operational Research</em> 289(2): 639–651.</a></p>
+<p><a target="_blank" rel="noopener" href="https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fars.els-cdn.com%2Fcontent%2Fimage%2F1-s2.0-S0377221720306408-mmc1.docx&amp;wdOrigin=BROWSELINK">Online Appendix-The Optimal Combination between Selling Mode and Logistics Service Strategy in an E-commerce Market</a></p>
+</blockquote>
+<h3 id="2-1-论文概述">2.1 论文概述</h3>
+<p>本次选取的论文主要探讨了电子商务市场中平台销售模式 (转售 vs 市场) 与物流服务策略 (供应商提供物流 vs 平台提供物流) 的最优组合问题。我选择这篇论文作为示例的原因在于其模型结构简单、清晰但又不失代表性，非常适合作为教学案例。可能有一些刚接触OM领域的读者会认为模型越复杂、数学越艰深，论文就越“高级”，进而质疑本文所选取的论文。但事实上，复杂≠深刻，难解≠合理，这里我想强调以下个人观点：</p>
+<blockquote>
+<p>“All models are wrong, but some are useful.” — George E. P. Box</p>
+<p>评估运营管理研究的价值，关键不在于模型的复杂度或求解难度，而在于它是否科学、合理地用数学语言刻画了一个有意义的现实问题。优秀的OM研究者往往会在充分反映实际情境的前提下，尽可能简化模型，直击问题本质。<strong>真正的大师之作，常常是用一个简洁而清晰的数学模型，揭示实践中长期存在的商业难题，为从业人员提供有益的启示。</strong></p>
+</blockquote>
+<p><strong>模型结构</strong></p>
+<p>该论文考虑了一条由一个上游产品供应商和一个下游在线电商平台组成的分销渠道。其中，电商平台可选择转售模式作为经销商，或选择市场模式作为在线市场。在转售模式下（例如京东自营店），电商平台先以批发价格<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span></span></span></span>从供应商处采购产品，然后以零售价格<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span>把产品卖给消费者。在市场模式下（例如淘宝、拼多多），电商平台允许供应商入驻平台开设品牌旗舰店，供应商得以按零售价格<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span>向消费者直接出售其产品，但平台会按佣金比例<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span></span></span></span>对每笔订单进行抽成。不失一般性，该文把产品的边际生产成本和销售成本标化为0 (注意该假设并不影响模型分析的定性结果，是OM研究广泛采用的一种假设) 。在确定销售模式后，该文关注到产品零售商还应决定由谁来负责产品的物流配送服务。具体来说，在转售模式下电商平台应决定是自己配送还是由供应商配送，在市场模式下供应商应决定是自己配送还是由平台配送，形成以下四种组合：</p>
+<ul>
+<li>转售模式+供应商物流</li>
+<li>转售模式+平台物流</li>
+<li>市场模式+供应商物流</li>
+<li>市场模式+平台物流</li>
+</ul>
+<p>为了提供物流服务，电商平台或供应商该公司需要承担诸如仓库建设/租赁成本，雇用员工处理包裹以及将产品交付给消费者之类的成本，作者将这些物流建设成本刻画为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><msup><mi>s</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">ks^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span>，其中<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span>代表物流成本因子 (<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span>越大表明物流建设效率低下)，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">s</span></span></span></span>代表物流服务水平 (<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">s</span></span></span></span>越大表明服务越好 )。使用二次型成本函数的原因有两个，一是为了体现出物流投资的边际效用随物流服务水平的提高而不断递减的现实情况，二是在充分刻画现实情况的基础上尽可能降低模型复杂度来简化求解分析工作。如图1所示，随<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">s</span></span></span></span>的不断提升，二次型函数已能充分表现出物流水平每提升一个单位需要付出的成本呈指数级上升的趋势。</p>
+<div class="text-center my-6">
+  <img 
+    src="物流成本.png" srcset="/img/loading.gif" lazyload 
+    alt="图1 物流成本的变化" 
+    class="mx-auto rounded-lg shadow transition-transform duration-300 hover:scale-120"
+    style="width: 50%;"
+  >
+  <p class="mt-2 text-sm text-gray-600 italic">图1 物流成本的变化</p>
+</div>
+<p><strong>核心问题</strong></p>
+<ol>
+<li>哪个组合将产生最高的物流服务水平或低价的零售价格？</li>
+<li>在不同组合下，公司的盈利能力表现如何？</li>
+<li>如果考虑供应商与平台之间的相互作用，哪种组合会是均衡结果？</li>
+</ol>
+<p><strong>需求函数</strong></p>
+<p>考虑到消费者的价格敏感性和物流服务敏感性，产品需求函数如下：</p>
+<p class="katex-block "><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msup><mi>D</mi><mi>j</mi></msup><mo>=</mo><mi>θ</mi><mo>−</mo><msup><mi>p</mi><mi>j</mi></msup><mo>+</mo><mi>β</mi><msup><mi>s</mi><mi>j</mi></msup></mrow><annotation encoding="application/x-tex">D^{j} = \theta - p^{j} + \beta s^{j}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8747em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">D</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8747em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.0691em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8747em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.0691em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05278em;">β</span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8747em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span></span></span></span></span></span></span></span></span></span></p>
+<p>参数符号含义及范围如下：</p>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span></span></span></span>代表产品产品的市场潜力，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>θ</mi><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\theta&gt;0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7335em;vertical-align:-0.0391em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span>；</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span>代表产品零售价格（决策变量）；</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>β</mi></mrow><annotation encoding="application/x-tex">\beta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05278em;">β</span></span></span></span>代表消费者对物流服务的敏感性，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>β</mi><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\beta&gt;0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05278em;">β</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span>；</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">s</span></span></span></span>代表物流服务水平（决策变量）；</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>j</mi><mo>=</mo><mo stretchy="false">{</mo><mi>R</mi><mi>S</mi><mo separator="true">,</mo><mi>R</mi><mi>P</mi><mo separator="true">,</mo><mi>M</mi><mi>S</mi><mo separator="true">,</mo><mi>M</mi><mi>P</mi><mo stretchy="false">}</mo></mrow><annotation encoding="application/x-tex">j=\{RS, RP, MS, MP\}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.854em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mord mathnormal" style="margin-right:0.05764em;">RS</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">RP</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">MS</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">MP</span><span class="mclose">}</span></span></span></span>代表了四种不同的“销售模式+物流提供者”组合</li>
+</ul>
+<p><strong>事件顺序</strong></p>
+<ol>
+<li>电商平台决定采用转售模式 (reselling mode) 还是市场模式 (marketplace mode) 。</li>
+<li>若电商平台在上一阶段选择了转售模式，则继续由电商平台决定使用供应商物流服务 (supplier logistics) 还是自身的物流服务 (platform logistics)；若电商平台在上一阶段选择了市场模式，则由供应商决定使用哪一方的物流服务。</li>
+<li>根据前两个阶段形成的策略组合，后续的决策顺序如下：
+<ul>
+<li>转售模式+供应商物流（RS Scenario）：供应商先独立决策产品批发价格<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span></span></span></span>和物流服务水平<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">s</span></span></span></span>，然后平台独立决策产品零售价格<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span>。</li>
+<li>转售模式+平台物流（RP Scenario）：供应商先独立决策产品批发价格<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span></span></span></span>，然后平台独立决策零售价格<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span>和物流服务水平<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">s</span></span></span></span>。</li>
+<li>市场模式+供应商物流（MS Scenario）：供应商独立决策零售价格<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span>和物流服务水平<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">s</span></span></span></span>。</li>
+<li>市场模式+平台物流（MP Scenario）：平台先独立决策物流服务水平<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">s</span></span></span></span>和向供应商收取的单位服务费用<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi></mrow><annotation encoding="application/x-tex">f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span></span></span></span>，然后供应商独立决策零售价格<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span>。</li>
+</ul>
+</li>
+</ol>
+<h3 id="2-2-操作演示">2.2 操作演示</h3>
+<p>该论文使用<strong>逆序求解法</strong>  (Backward Induction) 进行模型求解，这是求解动态博弈（序贯行动博弈）的核心方法，其基本思想是&quot;从后向前&quot;求解：</p>
+<ol>
+<li>
+<p>首先分析博弈的最后阶段，确定该阶段参与者的最优策略</p>
+</li>
+<li>
+<p>然后向前倒推，确定前一阶段参与者在预期后续行为下的最优策略</p>
+</li>
+<li>
+<p>逐步向前，直到博弈的开始阶段</p>
+</li>
+</ol>
+<p><strong>为什么使用逆序求解法？</strong></p>
+<ul>
+<li>理性预期：每个参与者在做决策时，都会理性预期后续参与者的反应</li>
+<li>子博弈精炼：确保得到的均衡在所有子博弈中都是最优的，排除不可信的威胁或承诺</li>
+<li>方法一致性：与博弈论中的子博弈完美均衡(Subgame Perfect Equilibrium)概念一致</li>
+</ul>
+<p>我们以<strong>RS情景</strong> (平台作为转售商，供应商提供物流服务) 为例讲解逆序求解步骤：</p>
+<ul>
+<li>第二阶段求解：固定批发价格<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span></span></span></span>和服务水平<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">s</span></span></span></span>，求出使平台利润<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>π</mi><mi>P</mi></msub></mrow><annotation encoding="application/x-tex">\pi_P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">π</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">P</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>最大化的最优零售价格响应函数<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>p</mi><mo lspace="0em" rspace="0em">∗</mo></msup><mo stretchy="false">(</mo><mi>w</mi><mo separator="true">,</mo><mi>s</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p^{*}(w, s)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6887em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">∗</span></span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">s</span><span class="mclose">)</span></span></span></span>。</li>
+<li>第一阶段求解：供应商预期平台的后续反应，将<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>p</mi><mo lspace="0em" rspace="0em">∗</mo></msup><mo stretchy="false">(</mo><mi>w</mi><mo separator="true">,</mo><mi>s</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p^{*}(w, s)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6887em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">∗</span></span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">s</span><span class="mclose">)</span></span></span></span>代入自身利润函数并求出使供应商利润<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>π</mi><mi>S</mi></msub></mrow><annotation encoding="application/x-tex">\pi_S</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">π</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05764em;">S</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>最大化的批发价格<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>w</mi><mrow><mi>R</mi><mi>S</mi></mrow></msup></mrow><annotation encoding="application/x-tex">w^{RS}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8413em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05764em;">RS</span></span></span></span></span></span></span></span></span></span></span></span>和服务水平<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>s</mi><mrow><mi>R</mi><mi>S</mi></mrow></msup></mrow><annotation encoding="application/x-tex">s^{RS}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8413em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05764em;">RS</span></span></span></span></span></span></span></span></span></span></span></span>。</li>
+<li>回代求解：把<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>w</mi><mrow><mi>R</mi><mi>S</mi></mrow></msup></mrow><annotation encoding="application/x-tex">w^{RS}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8413em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05764em;">RS</span></span></span></span></span></span></span></span></span></span></span></span>和<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>s</mi><mrow><mi>R</mi><mi>S</mi></mrow></msup></mrow><annotation encoding="application/x-tex">s^{RS}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8413em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05764em;">RS</span></span></span></span></span></span></span></span></span></span></span></span>代回第二阶段的响应函数，得到均衡零售价格<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>p</mi><mrow><mi>R</mi><mi>S</mi></mrow></msup><mo>=</mo><msup><mi>p</mi><mo lspace="0em" rspace="0em">∗</mo></msup><mo stretchy="false">(</mo><msup><mi>w</mi><mrow><mi>R</mi><mi>S</mi></mrow></msup><mo separator="true">,</mo><msup><mi>s</mi><mrow><mi>R</mi><mi>S</mi></mrow></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">p^{RS}=p^{*}(w^{RS}, s^{RS})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0358em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05764em;">RS</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.0913em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6887em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">∗</span></span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05764em;">RS</span></span></span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05764em;">RS</span></span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>，最后把均衡解代回利润函数可得到均衡利润。</li>
+</ul>
+<p>具体Mathematica代码如下：</p>
+<div class="text-center my-6">
+  <img 
+    src="RS proof.png" srcset="/img/loading.gif" lazyload 
+    alt="图2 RS情景求解" 
+    class="mx-auto rounded-lg shadow transition-transform duration-300 hover:scale-120"
+    style="width: 100%;"
+  >
+  <p class="mt-2 text-sm text-gray-600 italic">图2 RS情景求解</p>
+</div>
+<p>沿用上述方式，我们可得到其他三个情景的均衡解。为了保证所有情景下的均衡需求、均衡价格、均衡利润非负，以及利润函数concave性质以符合实践情况，我们需要汇总每个情景下的约束条件，并找到约束条件的参数空间。该文章的模型较为简单，约束条件仅有<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>4</mn><mi>k</mi><mo>−</mo><msup><mi>β</mi><mn>2</mn></msup><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">4k-\beta^2&gt;0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord">4</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.0085em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05278em;">β</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>&lt;</mo><msup><mi>α</mi><mo lspace="0em" rspace="0em">∗</mo></msup></mrow><annotation encoding="application/x-tex">\alpha &lt; \alpha^{*}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6887em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6887em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">∗</span></span></span></span></span></span></span></span></span></span></span></span>。下面，我们在约束空间内，利用Mathematica来证明该论文的命题1。</p>
+<div class="text-center my-6">
+  <img 
+    src="propsition1 proof.png" srcset="/img/loading.gif" lazyload 
+    alt="图4 Propsition1证明" 
+    class="mx-auto rounded-lg shadow transition-transform duration-300 hover:scale-120"
+    style="width: 100%;"
+  >
+  <p class="mt-2 text-sm text-gray-600 italic">图4 Propsition1证明</p>
+</div>
+<h2 id="3-总结">3. 总结</h2>
+<h3 id="3-1-工具价值">3.1 工具价值</h3>
+<p>通过本文对Qin et al. (2021)论文的复现过程，我们可以清晰地看到Mathematica在运营管理研究中的独特价值：</p>
+<ul>
+<li><strong>理论验证的高效性</strong>：Mathematica的符号计算能力使得复杂的数学推导过程变得可视化、可验证，研究者可以专注于模型的经济学解释而非繁琐的计算细节。如本文所示，从需求函数构建到均衡解求取，再到命题证明，整个流程可以在一个集成环境中完成。</li>
+<li><strong>方法论的普适性</strong>：本文演示的逆序求解法是OM研究的核心方法之一，这种方法论与Mathematica的函数式编程范式高度契合。无论是供应链协调、渠道冲突还是平台竞争问题，类似的求解框架都可以快速迁移应用。</li>
+<li><strong>学术严谨性的保障</strong>：Mathematica精确的符号计算避免了人工推导可能出现的错误，其内置的数值精度控制和条件验证功能（如二阶条件检查）为研究结果的可靠性提供了技术保障。</li>
+</ul>
+<h3 id="3-2-发展方向">3.2 发展方向</h3>
+<p>尽管Mathematica是一款很强大的数学工具，足以解决OM研究中所碰到大多数问题，但我仍建议研究者在工具使用方面注意以下发展方向</p>
+<ul>
+<li><strong>多工具协同</strong>：虽然Mathematica在理论建模方面具有显著优势，但在数值计算、大数据处理、机器学习应用等方面可结合Python、Matlab等工具。例如，通过Mathematica进行符号推导得到不考虑约束时的所有可能理论结果，然后利用Matlab进行数值验证，判断哪些理论结果在约束空间内为空集（尤其是约束条件特别复杂，Reduce函数久久无法输出结果时），这种&quot;理论建模+数值实验&quot;的混合方法可大幅加快研究工作的进度，详情可见我的另一篇文章<a href="https://lazyclaw404.github.io/2025/06/07/%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E6%96%B9%E6%B3%95%E5%BA%94%E7%94%A8%EF%BC%9A%E5%A4%8D%E6%9D%82%E7%BA%A6%E6%9D%9F%E4%B8%8B%E7%9A%84%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0%E6%AF%94%E8%BE%83%E5%88%86%E6%9E%90/">《蒙特卡洛方法应用：复杂约束下的多元函数比较分析》</a>。</li>
+<li><strong>动态可视化扩展</strong>：Mathematica的Manipulate等交互功能可以进一步用于构建教学演示模型，帮助非技术背景的决策者理解复杂模型的管理启示。研究者可尝试开发动态参数看板，直观展示关键参数如何影响均衡结果。</li>
+</ul>
+<h3 id="3-3-结语">3.3 结语</h3>
+<p>运营管理研究正处在一个快速进步的时代。一方面，现实商业问题的复杂性要求更精确、更复杂的数学模型；另一方面，研究工具的发展使得复杂模型的求解变得可行。因此，近些年<em>Management Science</em>、<em>Manufacturing &amp; Service Operations Management</em>、<em>Production and Operations Management</em>、<em>European Journal of Operational Research</em>、<em>Naval Research Logistics</em>等OM/OR领域国际顶尖期刊发表的文章提出的模型日益复杂。然而，正如我在前文中所陈述的个人观点：优秀的研究工作不在于使用最复杂的模型，而在于选择适当的工具，清晰地回答重要的管理问题。</p>
+<blockquote>
+<p>“All models are wrong, but some are useful.” — George E. P. Box<br>
+模型的价值不在于完美复制现实，而在于揭示那些真正重要的关系，Mathematica正是帮助我们构建这些&quot;有用模型&quot;的利器。</p>
+</blockquote>
+<p>希望本文的演示能够帮助读者更快地将Mathematica应用于自己的研究课题，感谢阅读~</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E7%AC%A6%E5%8F%B7%E8%AE%A1%E7%AE%97%EF%BC%8CMathematica%E6%95%99%E5%AD%A6%EF%BC%8C%E6%96%87%E7%8C%AE%E5%A4%8D%E7%8E%B0/" class="print-no-link">#符号计算，Mathematica教学，文献复现</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>从模型构建到求解分析：Mathematica在OM研究中的应用</div>
+      <div>https://lazyclaw404.github.io/2025/06/10/从模型构建到求解分析：Mathematica在OM研究中的应用/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Lazyclaw</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年6月10日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-cc-nc"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-cc-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/06/07/%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E6%96%B9%E6%B3%95%E5%BA%94%E7%94%A8%EF%BC%9A%E5%A4%8D%E6%9D%82%E7%BA%A6%E6%9D%9F%E4%B8%8B%E7%9A%84%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0%E6%AF%94%E8%BE%83%E5%88%86%E6%9E%90/" title="蒙特卡洛方法应用：复杂约束下的多元函数比较分析">
+                        <span class="hidden-mobile">蒙特卡洛方法应用：复杂约束下的多元函数比较分析</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <span style="font-size: 0.9em">希望这些内容对你有所帮助，有任何想法或问题可点击信封图标联系我~ </span> <a href="mailto:zicliao@foxmail.com" title="发送邮件至zicliao@foxmail.com" style="margin-left: 5px"> <i class="iconfont icon-mail" style="font-size: 1em; color: #3eaf7c"></i> </a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

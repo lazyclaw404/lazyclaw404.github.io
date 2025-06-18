@@ -1,0 +1,122 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      4159,        114]
+NotebookOptionsPosition[      3703,         98]
+NotebookOutlinePosition[      4115,        115]
+CellTagsIndexPosition[      4072,        112]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{"(*", 
+  RowBox[{
+  "\:8fd9\:4e2a\:51fd\:6570\:5fc5\:987b\:4e0eToMatlab\:5305\:642d\:914d\:4f7f\
+\:7528", "\:ff0c", "\:5148\:8fd0\:884cToMatlab", "\:ff0c", 
+   "\:5728\:8fd0\:884c\:8fd9\:4e2a\:51fd\:6570", "\:ff01"}], "*)"}]], "Input",
+ CellChangeTimes->{{3.9592196124447265`*^9, 
+  3.9592196482243214`*^9}},ExpressionUUID->"c8fc02bd-a18b-47d6-8ec9-\
+b76d479ecc78"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"BatchWriteMatlab", "[", 
+   RowBox[{"exprList_", ",", "file_", ",", "funNames_"}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"codes", ",", "nbDir", ",", "fullPath"}], "}"}], ",", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Length", "[", "exprList", "]"}], "\[NotEqual]", 
+       RowBox[{"Length", "[", "funNames", "]"}]}], ",", 
+      RowBox[{
+      "Print", "[", 
+       "\"\<\:9519\:8bef\:ff1a\:8868\:8fbe\:5f0f\:6570\:91cf\:4e0e\:51fd\:6570\
+\:540d\:6570\:91cf\:4e0d\:5339\:914d\:ff01\>\"", "]"}], ",", 
+      RowBox[{"(", 
+       RowBox[{"(*", 
+        RowBox[{"\:83b7\:53d6\:5f53\:524dNotebook\:76ee\:5f55", 
+         RowBox[{
+         "\:ff08", "\:672a\:4fdd\:5b58\:5219\:7528\:5de5\:4f5c\:76ee\:5f55", 
+          "\:ff09"}]}], "*)"}], 
+       RowBox[{
+        RowBox[{"nbDir", "=", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"NotebookFileName", "[", "]"}], "\[Equal]", "\"\<\>\""}], 
+           ",", 
+           RowBox[{"Directory", "[", "]"}], ",", 
+           RowBox[{"NotebookDirectory", "[", "]"}]}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"fullPath", "=", 
+         RowBox[{"FileNameJoin", "[", 
+          RowBox[{"{", 
+           RowBox[{"nbDir", ",", "file"}], "}"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"(*", "\:751f\:6210MATLAB\:4ee3\:7801", "*)"}], 
+        RowBox[{"codes", "=", 
+         RowBox[{"Table", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"funNames", "[", 
+             RowBox[{"[", "i", "]"}], "]"}], "<>", "\"\< = \>\"", "<>", 
+            RowBox[{"ToMatlab", "[", 
+             RowBox[{"exprList", "[", 
+              RowBox[{"[", "i", "]"}], "]"}], "]"}], "<>", "\"\<;\\n\>\""}], 
+           ",", 
+           RowBox[{"{", 
+            RowBox[{"i", ",", "1", ",", 
+             RowBox[{"Length", "[", "exprList", "]"}]}], "}"}]}], "]"}]}], 
+        ";", "\[IndentingNewLine]", 
+        RowBox[{"(*", "\:5199\:5165\:6587\:4ef6", "*)"}], 
+        RowBox[{"Export", "[", 
+         RowBox[{"fullPath", ",", 
+          RowBox[{"StringJoin", "[", "codes", "]"}], ",", "\"\<Text\>\""}], 
+         "]"}], ";", "\[IndentingNewLine]", 
+        RowBox[{"(*", "\:4ec5\:4fdd\:7559\:8def\:5f84\:63d0\:793a", "*)"}], 
+        RowBox[{"Print", "[", 
+         RowBox[{
+         "\"\<\:2705 \:6587\:4ef6\:5df2\:4fdd\:5b58\:81f3\:ff1a\>\"", ",", 
+          "fullPath"}], "]"}]}], ")"}]}], "]"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.9592174009944906`*^9, 3.95921740099549*^9}, {
+  3.9592236011797333`*^9, 3.959223601340914*^9}},
+ CellLabel->
+  "In[116]:=",ExpressionUUID->"f24f7386-1697-403a-8c1a-841e71f84f3a"]
+},
+WindowSize->{776, 872},
+WindowMargins->{{564, Automatic}, {Automatic, 54}},
+FrontEndVersion->"12.1 for Microsoft Windows (64-bit) (2020\:5e746\:67089\
+\:65e5)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"ccd73a9a-239b-44bd-8c03-371f010579c7"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 388, 8, 28, "Input",ExpressionUUID->"c8fc02bd-a18b-47d6-8ec9-b76d479ecc78"],
+Cell[949, 30, 2750, 66, 390, "Input",ExpressionUUID->"f24f7386-1697-403a-8c1a-841e71f84f3a"]
+}
+]
+*)
+
